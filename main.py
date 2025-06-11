@@ -1,6 +1,8 @@
 from video_processing import load_video, extract_frames, create_video_writer, write_frame
 from frame_processing import compute_homography, detect_target_image, warp_image, overlay_warped_image
+from tqdm import tqdm
 import cv2
+
 
 # This version of the code implement the entire pipeline to process 
 # a video by overlaying a custom image onto a target image. To do so,
@@ -23,18 +25,23 @@ target = cv2.imread(target_image_path)
 custom = cv2.imread(custom_image_path)
 
 def main(video_path, output_path):
+
+    print(f"Opening video: {video_path}")
+
     video = load_video(video_path)
     
+    # Get video properties
     frame_size = (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     fps = video.get(cv2.CAP_PROP_FPS)
+    total_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
     
     writer = create_video_writer(output_path, frame_size, fps, codec)
-
-    count = 0
-    for frame in extract_frames(video):
+    
+    print("Processing frames...")
+    
+    # Loop through each frame in the video using tqdm for progress bar
+    for frame in tqdm(extract_frames(video), desc="Progress", total=total_frames):
         
-        print(f"Processing frame {count}")
-        count += 1
         key_points_target, key_points_frame, good_matches = detect_target_image(target, frame)
         H, mask = compute_homography(key_points_target, key_points_frame, good_matches)
         warped, warp_mask = warp_image(target, custom, H, frame.shape)
@@ -43,6 +50,8 @@ def main(video_path, output_path):
         write_frame(writer, warped)
         
     writer.release()
+
+    print(f"Video processing completed. Output saved to {output_path}")
 
 
 if __name__ == "__main__":
