@@ -2,13 +2,25 @@
 An augmented reality computer vision pipeline that detects, tracks, and replaces a target planar object in a video stream with a custom image by computing homographies for each frame.
 
 
-<div style="display: flex; gap: 10px;">
-  <video width="400" autoplay loop muted playsinline>
-    <source src="./pedestrian_crossing.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-  <video width="400" autoplay loop muted playsinline>
-    <source src="./output_video.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
+# track_and_replace_objects_with_OpenCV
+An augmented reality computer vision pipeline that detects, tracks, and replaces a target planar object in a video stream with a custom image by computing homographies for each frame.
+
+
+<p align="center" style="margin: 0; padding: 0;">
+
+  <span style="display: inline-block; text-align: center; margin-right: 5px;">
+    <strong>Input Video</strong><br>
+    <img src="./data/gifs/input_video.gif" width="200" style="vertical-align: top;">
+  </span>
+
+  <span style="display: inline-block; text-align: center; margin-left: 5px;">
+    <strong>Output Video</strong><br>
+    <img src="./data/gifs/output_video.gif" width="200" style="vertical-align: top;">
+  </span>
+
+</p>
+
+
+
+
+
