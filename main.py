@@ -1,7 +1,10 @@
 from video_processing import load_video, extract_frames, create_video_writer, write_frame
 from frame_processing import compute_homography, detect_target_image, warp_image, overlay_warped_image, smooth_homography
+from utils import find_file_with_prefix
+import os
 from tqdm import tqdm
 import cv2
+
 
 
 # This version of the code implement the entire pipeline to process 
@@ -17,11 +20,13 @@ import cv2
 # Finally, it warps the custom image and overlays it onto the current frame.
 # This is a very basic implementation and requires many adjustments and improvements.
 
-in_path = './data/input_video.mp4'
-out_path = './data/output_video.mp4'
-target_image_path = './data/model.jpg'
-custom_image_path = './data/chill_guy.png'
+data_folder = './data'
 codec = 'mp4v'
+
+in_path = find_file_with_prefix(data_folder, 'input_video')
+target_image_path = find_file_with_prefix(data_folder, 'target')
+custom_image_path = find_file_with_prefix(data_folder, 'custom')
+out_path = os.path.join(data_folder, 'output_video.mp4')
 
 target = cv2.imread(target_image_path)
 custom = cv2.imread(custom_image_path)
@@ -61,6 +66,8 @@ def main(video_path, output_path):
     writer.release()
 
     print(f"Video processing completed. Output saved to {output_path}")
+
+
 
 
 if __name__ == "__main__":
