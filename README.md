@@ -3,5 +3,5 @@ An augmented reality computer vision pipeline that detects, tracks, and replaces
 
 <div align="center">
   <h3>Input vs Output</h3>
-  <img src="./data/gifs/input_output.gif" width="300" alt="Input and Output">
+  <img src="./data/gifs/input_output.gif" width="400" alt="Input and Output">
 </div>
