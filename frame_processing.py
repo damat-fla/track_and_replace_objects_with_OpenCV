@@ -8,11 +8,11 @@ def detect_target_image(target_image, frame):
     frame_shape = frame.shape
 
     # Smooth the images to reduce noise and improve keypoint detection
-    # target_image = cv2.GaussianBlur(target_image, (9,9), 0).reshape(target_shape)
-    # frame = cv2.GaussianBlur(frame, (9,9), 0).reshape(frame_shape)
+    # target_image = cv2.GaussianBlur(target_image, (3, 3), 0).reshape(target_shape)
+    # frame = cv2.GaussianBlur(frame, (3, 3), 0).reshape(frame_shape)
 
     # KEY POINTS DETECTION USING SIFT
-    sift = cv2.SIFT_create()
+    sift = cv2.SIFT_create(contrastThreshold=0.02, sigma=1.8)
 
     # Detect key point both in frame and target image
     key_points_target = sift.detect(target_image)
@@ -25,7 +25,7 @@ def detect_target_image(target_image, frame):
     # FLANN for finding correspondences
     FLANN_INDEX_KDTREE = 1
     index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
-    search_params = dict(checks = 50)
+    search_params = dict(checks = 200)
     flann = cv2.FlannBasedMatcher(indexParams=index_params, searchParams=search_params)
     matches = flann.knnMatch(des_target, des_frame, k=2)
 
@@ -48,7 +48,7 @@ def compute_homography(kp_target, kp_frame, matches, min_match_count=10):
     dst_pts = np.float32([kp_frame[m.trainIdx].pt for m in matches]).reshape(-1, 1, 2)
 
     # Compute the homography matrix from the target image to the frame
-    H, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
+    H, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 3.0)
 
     return H, mask
 
@@ -71,11 +71,13 @@ def warp_image(target_image, custom_image, homography, output_shape):
 
     # Warp the custom image using the computed homography
     # creates a neew image which is all black except for the area where the custom image is overlayed
-    warped = cv2.warpPerspective(src=custom_image, M=homography, dsize=(w_t, h_t))
+    warped = cv2.warpPerspective(src=custom_image, M=homography, dsize=(output_shape[1], output_shape[0]))
+
 
 
     white = np.ones([h, w], dtype=np.uint8) * 255
-    warp_mask = cv2.warpPerspective(white, homography, (w_t, h_t))
+    warp_mask = cv2.warpPerspective(white, homography, (output_shape[1], output_shape[0]))
+
 
     return warped, warp_mask
 
@@ -86,3 +88,9 @@ def overlay_warped_image(frame, warped_image, warp_mask):
     warped_image[warp_mask] = frame[warp_mask]
 
     return warped_image
+
+def smooth_homography(H_current, H_prev, alpha=0.9):
+    if H_prev is None:
+        return H_current
+    return H_prev * alpha + H_current * (1 - alpha)
+

@@ -12,7 +12,7 @@ def load_video(path: str) -> cv2.VideoCapture:
     return cap
 
 # Given a VideoCapture object, generate frames one by one
-def extract_frames(video: cv2.VideoCapture):
+def extract_frames(video: cv2.VideoCapture, rotate_code: int = None):
     
     while True:
         # ret: a boolean value stating if the frame is correctly read
@@ -21,6 +21,9 @@ def extract_frames(video: cv2.VideoCapture):
 
         if not ret: # check if we are at the end of video or something gone wrong
             break 
+
+        if rotate_code is not None:
+            frame = cv2.rotate(frame, rotate_code)
 
         yield frame
 
