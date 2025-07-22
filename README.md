@@ -24,36 +24,28 @@ This repository contains a classical computer vision pipeline (*no machine learn
 
 The general pipeline is as follows:
 
-1. **Key Points detection and description**:  
-   In each frame, the system detects the presence of a target planar object using SIFT (Scale-Invariant Feature Transform) keypoints and descriptors.
+1. **Key Points detection and description**:  In each frame, the system detects the presence of a target planar object using SIFT (Scale-Invariant Feature Transform) keypoints and descriptors.
 
-2. **Feature Matching**:  
-   FLANN-based matcher identifies correspondences between the target image and the current frame.
+2. **Feature Matching**:  FLANN-based matcher identifies correspondences between the target image and the current frame.
 
-3. **Homography Estimation**:  
-   Using RANSAC, a homography matrix is computed to map the target image onto the frame.
+3. **Homography Estimation**:  Using RANSAC, a homography matrix is computed to map the target image onto the frame.
 
-4. **Image Warping**:  
-   A custom image is warped to fit the perspective of the detected object.
+4. **Image Warping**:  A custom image is warped to fit the perspective of the detected object.
 
-5. **Overlay**:  
-   The warped custom image is blended into the original frame, replacing the target object.
+5. **Overlay**:  The warped custom image is blended into the original frame, replacing the target object.
 
-6. **Homography Smoothing**:  
-   Temporal smoothing is applied between frames to reduce visual jitter.
+6. **Homography Smoothing**:  Temporal smoothing is applied between frames to reduce visual jitter.
 
 ---
 
 ### Project Structure
 
-- `video_processing.py`:  
-  Contains utility functions to:
+- `video_processing.py`:  Contains utility functions to:
   - Load video, extract frames and return them one by one
   - Initialize the video writer
   - Write processed frames to output
 
-- `frame_processing.py`:  
-  Contains the core computer vision logic:
+- `frame_processing.py`:  Contains the core computer vision logic:
   - Detect keypoints and compute descriptors
   - Match features and compute homography
   - Warp the custom image and overlay it
