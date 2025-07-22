@@ -30,11 +30,12 @@ The general pipeline is as follows:
 
 3. **Homography Estimation**:  Using RANSAC, a homography matrix is computed to map the target image onto the frame.
 
-4. **Image Warping**:  A custom image is warped to fit the perspective of the detected object.
+4. **Homography Smoothing**:  To reduce visual jitter between frames, the current homography is influenced by the one computed in the previous frame using a weighted average. This temporal smoothing ensures a more stable and consistent transformation over time.
 
-5. **Overlay**:  The warped custom image is blended into the original frame, replacing the target object.
+5. **Image Warping**:  A custom image is warped to fit the perspective of the detected object.
 
-6. **Homography Smoothing**:  Temporal smoothing is applied between frames to reduce visual jitter.
+6. **Overlay**:  The warped custom image is blended into the original frame, replacing the target object.
+
 
 ---
 
