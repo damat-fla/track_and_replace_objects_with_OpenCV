@@ -7,10 +7,6 @@ def detect_target_image(target_image, frame):
     target_shape = target_image.shape
     frame_shape = frame.shape
 
-    # Smooth the images to reduce noise and improve keypoint detection
-    # target_image = cv2.GaussianBlur(target_image, (3, 3), 0).reshape(target_shape)
-    # frame = cv2.GaussianBlur(frame, (3, 3), 0).reshape(frame_shape)
-
     # KEY POINTS DETECTION USING SIFT
     sift = cv2.SIFT_create(contrastThreshold=0.02, sigma=1.8)
 
