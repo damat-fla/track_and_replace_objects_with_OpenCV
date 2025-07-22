@@ -2,7 +2,7 @@ import os
 
 # Helper function to find a file with a specific prefix in a folder
 def find_file_with_prefix(folder, prefix):
-    # Cerca il primo file nella cartella che inizia con prefix (ignorando l'estensione)
+    # Search for a file that starts with the given prefix (ignoring the extension)
     for filename in os.listdir(folder):
         name, ext = os.path.splitext(filename)
         if name == prefix:
