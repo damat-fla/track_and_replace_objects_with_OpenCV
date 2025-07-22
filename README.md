@@ -6,6 +6,8 @@ This repository contains a classical computer vision pipeline (*no machine learn
   <img src="./data/gifs/input_output.gif" width="400" alt="Input and Output">
 </div>
 
+---
+
 ### Usage
 
 1. Install the required libraries listed in `requirements.txt` (if necessary):
@@ -15,6 +17,8 @@ This repository contains a classical computer vision pipeline (*no machine learn
 
 2. Place your input video file, target image, and custom overlay image inside the `./data/` folder. Rename them `input_video`, `target` and `custom` respectively. The allowed image extensions are `jpg`, `jpeg` and `png`. Only `mp4` format is allowed for videos.
 3. Run the main script: `python main.py`
+
+---
 
 ### Approach
 
@@ -40,7 +44,7 @@ The general pipeline is as follows:
 
 ---
 
-## Project Structure
+### Project Structure
 
 - `video_processing.py`:  
   Contains utility functions to:
@@ -55,9 +59,7 @@ The general pipeline is as follows:
   - Warp the custom image and overlay it
   - Apply homography smoothing
 
-- `utils.py`:
-  Contains helper functions for handling file paths and formats
+- `utils.py`: Contains helper functions for handling file paths and formats
 
-- `main.py`:  
-  The main entry point of the pipeline. It orchestrates the entire process by loading the input data, calling the frame processing functions, and writing the final output video.
+- `main.py`: The main entry point of the pipeline. It orchestrates the entire process by loading the input data, calling the frame processing functions, and writing the final output video.
 
