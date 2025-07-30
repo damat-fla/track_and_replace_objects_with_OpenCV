@@ -1,4 +1,4 @@
-# track_and_replace_objects_with_OpenCV
+# Track and Replace Objects with OpenCV
 This repository contains a classical computer vision pipeline (*no machine learning or deep learning involved*) that detects and tracks a planar target object in videos and replaces it with a custom image. It leverages feature detection, descriptor matching, and homography estimation for each frame to achieve augmented reality effects.
 
 <div align="center">
